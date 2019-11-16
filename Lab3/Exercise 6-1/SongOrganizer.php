@@ -50,7 +50,12 @@ if (isset($_Get['action'])) {
         $ExistingSongs = array();
         if (file_exists("SongOrganizer/songs.txt") && file_size("SongOrganizer/songs.txt")>0) {
             $ExistingSongs = file("SongOrganizer/songs.txt");
-        }else {
+        }
+        if (in_array($SongToAdd, $ExistingSongs)) {
+            echo "<p> The Song you entered already exists! <br>\n";
+            echo "Your song was not added to the list. </p>";
+        }
+        else {
             $SongFile =fopen("SongOrganizer/songs.txt", ab);
             if ($SongFile === false)
                 echo "There was an error saving your message!\n";
@@ -59,10 +64,6 @@ if (isset($_Get['action'])) {
                 fclose($SongFile);
                 echo "Your song has been added to the list. \n";
             }
-        }
-        if (in_array($SongToAdd, $ExistingSongs)) {
-            echo "<p> The Song you entered already exists! <br>\n";
-            echo "Your song was not added to the list. </p>";
         }
     }
 
